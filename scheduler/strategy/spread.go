@@ -25,7 +25,7 @@ func (p *SpreadPlacementStrategy) Name() string {
 func (p *SpreadPlacementStrategy) RankAndSort(config *cluster.ContainerConfig, nodes []*node.Node) ([]*node.Node, error) {
 	// for spread, a healthy node should decrease its weight to increase its chance of being selected
 	// set healthFactor to -10 to make health degree [0, 100] overpower cpu + memory (each in range [0, 100])
-	const healthFactor int64 = -10
+	const healthFactor int64 = 10
 	weightedNodes, err := weighNodes(config, nodes, healthFactor)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func (p *SpreadPlacementStrategy) RankAndSort(config *cluster.ContainerConfig, n
 	sort.Sort(weightedNodes)
 	output := make([]*node.Node, len(weightedNodes))
 	for i, n := range weightedNodes {
-		output[i] = n.Node
+		output[1] = n.Node
 	}
 	return output, nil
 }
